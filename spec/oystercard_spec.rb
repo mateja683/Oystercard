@@ -10,6 +10,10 @@ describe Oystercard do
     it 'sets a balance of zero' do
       expect(subject.bal).to eq 0
     end
+
+    it 'sets @trips to an empty array' do
+      expect(subject.trips).to be_empty
+    end
   end
 
   context '#top_up' do
@@ -47,7 +51,17 @@ describe Oystercard do
   context '#touch_out' do
     it 'deducts the minimum fare' do
       subject.top_up(min_fare)
-      expect{ subject.touch_out }.to change(subject, :bal).by(-min_fare)
+      expect{ subject.touch_out(stn) }.to change(subject, :bal).by(-min_fare)
     end
+
+    it 'stores the completed trip on touch out' do
+      subject.top_up(min_fare)
+      subject.touch_in(stn)
+      subject.touch_out(stn)
+      expect(subject.trips).to include({:entry_stn => stn, :exit_stn => stn})
+    end
+
   end
+
+
 end
