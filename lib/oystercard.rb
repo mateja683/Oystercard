@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :bal
+  attr_reader :bal, :entry_stn
 
   MAX_BAL = 90
   MIN_FARE = 1
@@ -18,8 +18,9 @@ class Oystercard
     @bal -= val
   end
 
-  def touch_in
+  def touch_in(station)
     raise "Insufficient funds" if bal < MIN_FARE
+    @entry_stn = station
   end
 
   def touch_out

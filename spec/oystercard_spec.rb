@@ -4,6 +4,7 @@ describe Oystercard do
 
   let(:max_bal){ Oystercard::MAX_BAL }
   let(:min_fare){ Oystercard::MIN_FARE }
+  let(:stn) { double:station }
 
   context '#intialize' do
     it 'sets a balance of zero' do
@@ -33,7 +34,13 @@ describe Oystercard do
   context '#touch_in' do
     it 'checks for min bal' do
       subject.top_up(min_fare - 1)
-      expect{ subject.touch_in }.to raise_error "Insufficient funds"
+      expect{ subject.touch_in(stn) }.to raise_error "Insufficient funds"
+    end
+
+    it 'stores the entry station' do
+      subject.top_up(min_fare)
+      subject.touch_in(stn)
+      expect(subject.entry_stn).to eq (stn)
     end
   end
 
