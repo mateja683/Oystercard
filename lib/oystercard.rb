@@ -14,11 +14,15 @@ class Oystercard
     @bal += val
   end
 
-  def deduct(val)
+  def deduct(val = MIN_FARE)
     @bal -= val
   end
 
   def touch_in
     raise "Insufficient funds" if bal < MIN_FARE
+  end
+
+  def touch_out
+    deduct
   end
 end
