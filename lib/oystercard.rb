@@ -3,7 +3,6 @@ class Oystercard
   attr_reader :bal, :entry_stn, :trips
 
   MAX_BAL = 90
-  MIN_FARE = 1
 
   def initialize(journey_klass = Journey)
     @journey_klass = journey_klass
@@ -17,21 +16,26 @@ class Oystercard
   end
 
   def touch_in(entry_stn)
-    raise "Insufficient funds" if bal < MIN_FARE
-    @current_jny = @journey_klass.new
-    @current_jny.start_jny(entry_stn)
+    raise "Insufficient funds" if bal < Journey::MIN_FARE
+    deduct unless @current_jny.nil?
+    current_jny.start_jny(entry_stn)
   end
 
   def touch_out(exit_stn)
-    @current_jny.end_jny(exit_stn)
+    current_jny.end_jny(exit_stn)
     @trips << @current_jny
     deduct
+    @current_jny = nil
   end
 
   private
 
   def deduct
     @bal -= @current_jny.fare
+  end
+
+  def current_jny
+    @current_jny ? @current_jny : (@current_jny =  @journey_klass.new)
   end
 
 end
