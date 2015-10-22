@@ -16,19 +16,22 @@ class Oystercard
     @bal += val
   end
 
+  def touch_in(entry_stn)
+    raise "Insufficient funds" if bal < MIN_FARE
+    @current_jny = @journey_klass.new
+    @current_jny.start_jny(entry_stn)
+  end
+
+  def touch_out(exit_stn)
+    @current_jny.end_jny(exit_stn)
+    @trips << @current_jny
+    deduct
+  end
+
+  private
+
   def deduct(val = MIN_FARE)
     @bal -= val
   end
 
-  def touch_in(entry_stn)
-    raise "Insufficient funds" if bal < MIN_FARE
-    @journey = @journey_klass.new
-    @journey.start_jny(entry_stn)
-  end
-
-  def touch_out(exit_stn)
-    @journey.end_jny(exit_stn)
-    @trips << @journey
-    deduct
-  end
 end

@@ -32,26 +32,11 @@ describe Oystercard do
     end
   end
 
-  context "#deduct" do
-    it 'allows fare to be deducted' do
-      subject.top_up(10)
-      expect{ subject.deduct(3) }.to change(subject, :bal).by(-3)
-    end
-  end
-
   context '#touch_in' do
     it 'checks for min bal' do
       subject.top_up(min_fare - 1)
       expect{ subject.touch_in(stn) }.to raise_error "Insufficient funds"
     end
-
-=begin
-    it 'stores the entry station' do
-      subject.top_up(min_fare)
-      subject.touch_in(stn)
-      expect(subject.entry_stn).to eq (stn)
-    end
-=end
 
   end
 
