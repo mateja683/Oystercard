@@ -3,6 +3,7 @@ class Oystercard
   attr_reader :bal
 
   MAX_BAL = 90
+  MIN_FARE = 1
 
   def initialize
     @bal = 0
@@ -16,6 +17,8 @@ class Oystercard
   def deduct(val)
     @bal -= val
   end
-  
 
+  def touch_in
+    raise "Insufficient funds" if bal < MIN_FARE
+  end
 end

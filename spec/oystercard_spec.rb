@@ -28,4 +28,11 @@ describe Oystercard do
       expect{subject.deduct(3)}.to change(subject, :bal).by(-3)
     end
   end
+
+  context '#touch_in' do
+    it 'checks for min bal when touching in' do
+      subject.top_up(Oystercard::MIN_FARE - 1)
+      expect{subject.touch_in}.to raise_error "Insufficient funds"
+    end
+  end
 end
