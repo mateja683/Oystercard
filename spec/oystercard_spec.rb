@@ -2,15 +2,23 @@ require 'oystercard'
 
 describe Oystercard do
 
+  let(:max_bal){ Oystercard::MAX_BAL }
+
   context '#intialize' do
     it 'sets a balance of zero' do
-      expect(subject.balance).to eq 0
+      expect(subject.bal).to eq 0
     end
   end
 
   context '#top_up' do
     it 'allows user to add balance' do
-      expect{subject.top_up(10)}.to change(subject, :balance).by(10)
+      expect{subject.top_up(10)}.to change(subject, :bal).by(10)
+    end
+
+    it 'prevents top up beyond max balance' do
+      error = "Top-up failed: max balance of £#{max_bal}."
+      subject.top_up(max_bal)
+      expect{ subject.top_up(1) }.to raise_error error
     end
   end
 
