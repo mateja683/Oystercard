@@ -27,6 +27,7 @@ class Oystercard
   end
 
   def touch_out(exit_stn)
+    @journey.end_jny(exit_stn)
     @trips << @journey
     deduct
   end

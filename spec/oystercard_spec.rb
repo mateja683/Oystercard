@@ -5,7 +5,7 @@ describe Oystercard do
   let(:max_bal){ Oystercard::MAX_BAL }
   let(:min_fare){ Oystercard::MIN_FARE }
   let(:stn) { double:station }
-  let(:jrny){ double('jrny', start_jny: nil) }
+  let(:jrny){ double('jrny', start_jny: nil, end_jny: nil) }
   let(:jrny_klass){ double('jrny_klass',new: jrny ) }
 
   subject { Oystercard.new(jrny_klass) }
@@ -58,6 +58,7 @@ describe Oystercard do
   context '#touch_out' do
     it 'deducts the minimum fare' do
       subject.top_up(min_fare)
+      subject.touch_in(stn)
       expect{ subject.touch_out(stn) }.to change(subject, :bal).by(-min_fare)
     end
 

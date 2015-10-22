@@ -11,5 +11,12 @@ describe Journey do
 
   end
 
+  context '#end_jny' do
+    it 'stoares the exit station' do
+      subject.end_jny(:stn)
+      expect(subject.exit_stn).to eq (:stn)
+    end
 
+
+  end
 end
