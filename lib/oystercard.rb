@@ -5,7 +5,8 @@ class Oystercard
   MAX_BAL = 90
   MIN_FARE = 1
 
-  def initialize
+  def initialize(journey_klass = Journey)
+    @journey_klass = journey_klass
     @bal = 0
     @trips = Array.new
   end
@@ -21,11 +22,12 @@ class Oystercard
 
   def touch_in(entry_stn)
     raise "Insufficient funds" if bal < MIN_FARE
-    @entry_stn = entry_stn
+    @journey = @journey_klass.new
+    @journey.start_jny(entry_stn)
   end
 
   def touch_out(exit_stn)
-    @trips << {entry_stn: @entry_stn, exit_stn: exit_stn}
+    @trips << @journey
     deduct
   end
 end

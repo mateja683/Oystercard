@@ -5,6 +5,10 @@ describe Oystercard do
   let(:max_bal){ Oystercard::MAX_BAL }
   let(:min_fare){ Oystercard::MIN_FARE }
   let(:stn) { double:station }
+  let(:jrny){ double('jrny', start_jny: nil) }
+  let(:jrny_klass){ double('jrny_klass',new: jrny ) }
+
+  subject { Oystercard.new(jrny_klass) }
 
   context '#intialize' do
     it 'sets a balance of zero' do
@@ -41,11 +45,14 @@ describe Oystercard do
       expect{ subject.touch_in(stn) }.to raise_error "Insufficient funds"
     end
 
+=begin
     it 'stores the entry station' do
       subject.top_up(min_fare)
       subject.touch_in(stn)
       expect(subject.entry_stn).to eq (stn)
     end
+=end
+
   end
 
   context '#touch_out' do
@@ -58,7 +65,7 @@ describe Oystercard do
       subject.top_up(min_fare)
       subject.touch_in(stn)
       subject.touch_out(stn)
-      expect(subject.trips).to include({:entry_stn => stn, :exit_stn => stn})
+      expect(subject.trips.last).to eq(jrny)
     end
 
   end
