@@ -13,4 +13,9 @@ class Oystercard
     @bal += val
   end
 
+  def deduct(val)
+    @bal -= val
+  end
+  
+
 end

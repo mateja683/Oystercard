@@ -22,4 +22,10 @@ describe Oystercard do
     end
   end
 
+  context "#deduct" do
+    it 'allows fare to be deducted' do
+      subject.top_up(10)
+      expect{subject.deduct(3)}.to change(subject, :bal).by(-3)
+    end
+  end
 end
