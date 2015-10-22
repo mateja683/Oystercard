@@ -5,7 +5,7 @@ describe Oystercard do
   let(:max_bal){ Oystercard::MAX_BAL }
   let(:min_fare){ Oystercard::MIN_FARE }
   let(:stn) { double:station }
-  let(:jrny){ double('jrny', start_jny: nil, end_jny: nil) }
+  let(:jrny){ double('jrny', start_jny: nil, end_jny: nil, fare: min_fare) }
   let(:jrny_klass){ double('jrny_klass',new: jrny ) }
 
   subject { Oystercard.new(jrny_klass) }

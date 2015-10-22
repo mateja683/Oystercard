@@ -30,8 +30,8 @@ class Oystercard
 
   private
 
-  def deduct(val = MIN_FARE)
-    @bal -= val
+  def deduct
+    @bal -= @current_jny.fare
   end
 
 end
