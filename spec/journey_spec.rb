@@ -3,7 +3,6 @@ require 'journey'
 describe Journey do
 
   context '#start_jny' do
-
     it 'stores the entry station' do
       subject.start_jny(:stn)
       expect(subject.entry_stn).to eq (:stn)
@@ -32,6 +31,6 @@ describe Journey do
       subject.end_jny(:stn)
       expect(subject.fare).to eq(Journey::PEN_FARE)
     end
-
   end
+
 end
